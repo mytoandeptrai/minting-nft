@@ -102,13 +102,21 @@ const useNftMint = (props: Props) => {
       }
    }, [isSuccess]);
 
+   const isDisabledMintBtn =
+      isPending ||
+      isPendingSendTransaction ||
+      isLoading ||
+      (useCustomAddress && !customAddress);
+   const isDisabledInput = isPending || isPendingSendTransaction || isLoading;
+
    return {
       quantity,
       useCustomAddress,
       customAddress,
       account,
       isPendingSendTransaction,
-      isDisabledMintBtn: isPending || isPendingSendTransaction || isLoading,
+      isDisabledMintBtn,
+      isDisabledInput,
       decreaseQuantity,
       increaseQuantity,
       handleQuantityChange,
@@ -126,6 +134,7 @@ export function NftMint(props: Props) {
       account,
       isPendingSendTransaction,
       isDisabledMintBtn,
+      isDisabledInput,
       decreaseQuantity,
       increaseQuantity,
       handleQuantityChange,
@@ -178,7 +187,7 @@ export function NftMint(props: Props) {
                      onChange={handleQuantityChange}
                      className="w-28 text-center rounded-none border-x-0 pl-6"
                      min="1"
-                     disabled={isDisabledMintBtn}
+                     disabled={isDisabledInput}
                   />
                   <Button
                      variant="outline"
