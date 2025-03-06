@@ -69,17 +69,16 @@ const useNftMint = (props: Props) => {
    });
 
    const onMintNftToken = async () => {
-      if (!customAddress) {
-         toast.error("Please enter a custom address");
+      if (!account || !account?.address) {
          return;
       }
-
+      const address = customAddress || account?.address!;
       const transaction = prepareContractCall({
          contract,
          method:
             "function mintTo(address _to, uint256 _tokenId, string _uri, uint256 _amount)",
          params: [
-            customAddress,
+            address,
             BigInt(props.tokenId),
             tokenURI as string,
             BigInt(quantity),
@@ -110,7 +109,6 @@ const useNftMint = (props: Props) => {
       account,
       isPendingSendTransaction,
       isDisabledMintBtn: isPending || isPendingSendTransaction || isLoading,
-      isSuccess,
       decreaseQuantity,
       increaseQuantity,
       handleQuantityChange,
@@ -122,7 +120,6 @@ const useNftMint = (props: Props) => {
 
 export function NftMint(props: Props) {
    const {
-      isSuccess,
       quantity,
       useCustomAddress,
       customAddress,

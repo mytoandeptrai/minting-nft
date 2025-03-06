@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingNftMint from "@/components/loading-nft-mint";
 import { NftMint } from "@/components/nft-mint";
 import {
    defaultChainId,
@@ -38,6 +39,12 @@ export default function Home() {
    const description = isERC1155Query.data
       ? nftQuery.data?.metadata.description
       : contractMetadataQuery.data?.description;
+
+   const loading = nftQuery?.isLoading ?? false;
+
+   if (loading) {
+      return <LoadingNftMint />;
+   }
 
    return (
       <NftMint
