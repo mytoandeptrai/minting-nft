@@ -5,21 +5,24 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Toast } from "@/components/ui/toast";
 import { client } from "@/lib/thirdwebClient";
 import { Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { prepareContractCall, type ThirdwebContract } from "thirdweb";
+import { type ThirdwebContract } from "thirdweb";
 import {
    ConnectButton,
    NFT,
    useActiveAccount,
+   useActiveWalletChain,
    useReadContract,
    useSendTransaction,
+   useSwitchActiveWalletChain,
    useWaitForReceipt,
 } from "thirdweb/react";
 import { Skeleton } from "./ui/skeleton";
+import { claimTo } from "thirdweb/extensions/erc1155";
+import { createWallet, inAppWallet } from "thirdweb/wallets";
 
 type Props = {
    contract: ThirdwebContract;
@@ -37,6 +40,8 @@ const useNftMint = (props: Props) => {
    const [customAddress, setCustomAddress] = useState("");
 
    const account = useActiveAccount();
+   const activeChain = useActiveWalletChain();
+   const switchChain = useSwitchActiveWalletChain();
    const {
       mutate: sendTransaction,
       isPending: isPendingSendTransaction,
@@ -52,7 +57,7 @@ const useNftMint = (props: Props) => {
    };
 
    const increaseQuantity = () => {
-      setQuantity((prev) => prev + 1); // Assuming a max of 10 NFTs can be minted at once
+      setQuantity((prev) => prev + 1);
    };
 
    const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,16 +78,11 @@ const useNftMint = (props: Props) => {
          return;
       }
       const address = customAddress || account?.address!;
-      const transaction = prepareContractCall({
+      const transaction = claimTo({
          contract,
-         method:
-            "function mintTo(address _to, uint256 _tokenId, string _uri, uint256 _amount)",
-         params: [
-            address,
-            BigInt(props.tokenId),
-            tokenURI as string,
-            BigInt(quantity),
-         ],
+         to: address,
+         quantity: BigInt(quantity),
+         tokenId: BigInt(props.tokenId),
       });
       sendTransaction(transaction, {
          onError: (err: Error) => {
@@ -101,6 +101,20 @@ const useNftMint = (props: Props) => {
          setCustomAddress("");
       }
    }, [isSuccess]);
+
+   useEffect(() => {
+      const chainOfWallet = activeChain?.id;
+      const chainOfContract = contract.chain.id;
+      const hasAccount = account && account?.address;
+
+      if (hasAccount && chainOfContract && chainOfContract !== chainOfWallet) {
+         try {
+            switchChain({ id: contract.chain.id, rpc: contract.chain.rpc });
+         } catch (error) {
+            console.error("Error switching chain!");
+         }
+      }
+   }, [switchChain, account, contract.chain.id]);
 
    const isDisabledMintBtn =
       isPending ||
@@ -126,6 +140,18 @@ const useNftMint = (props: Props) => {
    };
 };
 
+const wallets = [
+   inAppWallet({
+      auth: {
+         options: [],
+      },
+   }),
+   createWallet("io.metamask"),
+   createWallet("com.coinbase.wallet"),
+   createWallet("me.rainbow"),
+   createWallet("io.zerion.wallet"),
+];
+
 export function NftMint(props: Props) {
    const {
       quantity,
@@ -146,7 +172,10 @@ export function NftMint(props: Props) {
    return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
          <div className="absolute top-4 right-4">
-            <ConnectButton client={client} />
+            <ConnectButton
+               wallets={wallets}
+               client={client}
+            />
          </div>
          <Card className="w-full max-w-md">
             <CardContent className="pt-6">
@@ -244,6 +273,7 @@ export function NftMint(props: Props) {
                   <ConnectButton
                      client={client}
                      connectButton={{ style: { width: "100%" } }}
+                     wallets={wallets}
                   />
                )}
             </CardFooter>
