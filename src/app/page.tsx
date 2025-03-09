@@ -1,7 +1,7 @@
 "use client";
 
 import LoadingNftMint from "@/components/loading-nft-mint";
-import { NftMint } from "@/components/nft-mint";
+import NftMint from "@/components/modules/nft-mint";
 import {
    defaultChainId,
    defaultNftContractAddress,
