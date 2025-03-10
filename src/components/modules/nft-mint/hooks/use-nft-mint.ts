@@ -36,7 +36,6 @@ export const useNftMint = (props: Props) => {
       },
    });
    const [useCustomAddress, setUseCustomAddress] = useState(false);
-   const [customAddress, setCustomAddress] = useState("");
 
    const account = useActiveAccount();
    const activeChain = useActiveWalletChain();
@@ -65,10 +64,7 @@ export const useNftMint = (props: Props) => {
       }
    }, [switchChain, account, contract.chain.id]);
 
-   const isDisabledMintBtn =
-      isPendingSendTransaction ||
-      isLoading ||
-      (useCustomAddress && !customAddress);
+   const isDisabledMintBtn = isPendingSendTransaction || isLoading;
 
    const onSubmit = async (values: z.infer<typeof nftMintSchema>) => {
       if (!account || !account?.address) {
