@@ -66,7 +66,8 @@ const NftMintContentHeader = (props: Props) => {
                </Link>
             </p>
             <p className="text-lg font-semibold mb-1">
-               Created: <span className="font-normal">100</span>
+               Total minted:{" "}
+               <span className="font-normal">1,234 Essence</span>
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
                {props.description}
