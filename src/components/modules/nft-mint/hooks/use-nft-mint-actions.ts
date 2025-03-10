@@ -36,8 +36,6 @@ export const useMintNftActions = (props: Props) => {
 
       if (useCustomAddress && !customAddress) return true;
 
-      return false;
-
       return Number(balanceData) > 0;
    }, []);
 
