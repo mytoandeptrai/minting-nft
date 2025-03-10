@@ -7,7 +7,7 @@ import { Plus, Minus } from "lucide-react";
 
 export default function LoadingNftMint() {
    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 transition-colors duration-200">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900">
          <Card className="w-full max-w-md">
             <CardContent className="pt-6">
                <div className="aspect-square overflow-hidden rounded-lg mb-4 relative">

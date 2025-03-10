@@ -70,7 +70,7 @@ export default function Home() {
                         src="/sub-logo.png"
                         alt="sub-logo"
                         width={250}
-                        height={212}
+                        height={38}
                      />
                   </div>
                </div>
