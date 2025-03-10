@@ -20,6 +20,7 @@ export function Toaster() {
             return (
                <Toast
                   key={id}
+                  className="dark:bg-white dark:text-black"
                   {...props}
                >
                   <div className="grid gap-1">
