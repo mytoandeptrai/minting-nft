@@ -12,6 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { nftMintSchema } from "@/schemas";
+import Link from "next/link";
 import React from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { ThirdwebContract } from "thirdweb";
@@ -50,9 +51,15 @@ const NftMintContentHeader = (props: Props) => {
                </React.Suspense>
             </NFT>
          </div>
-         <h2 className="text-2xl font-bold mb-2 dark:text-white">
+         <h2 className="text-2xl font-bold mb-2 dark:text-custom-title">
             {props.displayName}
          </h2>
+         <p className="text-lg font-semibold mb-4">
+            Collections:{" "}
+            <Link className="underline font-normal" href="https://joepegs.com/collections/avalanche/lil-coq" target="_blank">
+               {process.env.NEXT_PUBLIC_NFT_COLLECTION_NAME}
+            </Link>
+         </p>
          <p className="text-gray-600 dark:text-gray-300 mb-4">
             {props.description}
          </p>

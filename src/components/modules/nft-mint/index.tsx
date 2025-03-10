@@ -4,10 +4,10 @@ import NftMintActions from "@/components/modules/nft-mint/nft-mint-actions";
 import NftMintContent from "@/components/modules/nft-mint/nft-mint-content";
 import { Card } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { client } from "@/lib/thirdwebClient";
 import { type ThirdwebContract } from "thirdweb";
-import { ConnectButton, darkTheme } from "thirdweb/react";
-import { useNftMint, wallets } from "./hooks";
+import { useNftMint } from "./hooks";
+import { useEffect } from "react";
+import { ToastAction } from "@/components/ui/toast";
 
 export type NftMintProps = {
    contract: ThirdwebContract;
@@ -19,38 +19,56 @@ export type NftMintProps = {
 };
 
 export default function NftMint(props: NftMintProps) {
-   const { isPendingSendTransaction, isDisabledMintBtn, form, onSubmit } =
-      useNftMint(props);
+   const {
+      isPendingSendTransaction,
+      isDisabledMintBtn,
+      form,
+      isSuccess,
+      onSubmit,
+      toast,
+   } = useNftMint(props);
+
+   useEffect(() => {
+      if (isSuccess) {
+         form.reset();
+         toast({
+            title: "Confirmed successfully!",
+            description: "Click the button beside to view NFT.",
+            action: (
+               <ToastAction
+                  altText="Try again"
+                  onClick={() => {
+                     const market =
+                        process.env.NEXT_PUBLIC_NFT_MARKETPLACE_DETAIL;
+                     if (market) {
+                        window.open(market, "_blank");
+                     }
+                  }}
+               >
+                  View
+               </ToastAction>
+            ),
+         });
+      }
+   }, [isSuccess, form]);
 
    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
-         <div className="absolute top-4 right-4">
-            <ConnectButton
-               wallets={wallets}
-               client={client}
-               connectModal={{
-                  showThirdwebBranding: false,
-                  title: 'Connect to your wallet'
-               }}
-            />
-         </div>
-         <Form {...form}>
-            <form
-               className="block"
-               onSubmit={form.handleSubmit(onSubmit)}
-            >
-               <Card className="w-full max-w-md">
-                  <NftMintContent
-                     {...props}
-                     isPendingSendTransaction={isPendingSendTransaction}
-                  />
-                  <NftMintActions
-                     {...props}
-                     isDisabled={isDisabledMintBtn}
-                  />
-               </Card>
-            </form>
-         </Form>
-      </div>
+      <Form {...form}>
+         <form
+            className="block"
+            onSubmit={form.handleSubmit(onSubmit)}
+         >
+            <Card className="w-full max-w-md">
+               <NftMintContent
+                  {...props}
+                  isPendingSendTransaction={isPendingSendTransaction}
+               />
+               <NftMintActions
+                  {...props}
+                  isDisabled={isDisabledMintBtn}
+               />
+            </Card>
+         </form>
+      </Form>
    );
 }

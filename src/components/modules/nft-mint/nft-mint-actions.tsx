@@ -12,7 +12,7 @@ type Props = {
 };
 
 const NftMintActions = (props: Props) => {
-   const { account, disabled } = useMintNftActions(props);
+   const { account, disabled, hasMinted } = useMintNftActions(props);
 
    return (
       <CardFooter>
@@ -20,10 +20,11 @@ const NftMintActions = (props: Props) => {
             <div className="flex flex-col gap-y-2 w-full">
                <Button
                   type="submit"
-                  className="bg-black text-white w-full"
+                  className="bg-black text-custom-title dark:bg-white dark:hover:bg-primary/90"
                   disabled={disabled}
+                  loading={props?.isDisabled}
                >
-                  Mint NFT
+                  {hasMinted ? "You minted" : "Mint"} NFT
                </Button>
             </div>
          ) : (
@@ -33,7 +34,7 @@ const NftMintActions = (props: Props) => {
                wallets={wallets}
                connectModal={{
                   showThirdwebBranding: false,
-                  title: 'Connect to your wallet'
+                  title: "Connect to your wallet",
                }}
             />
          )}

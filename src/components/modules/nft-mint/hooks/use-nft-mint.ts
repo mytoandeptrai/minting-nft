@@ -3,13 +3,11 @@
 import { nftMintSchema } from "@/schemas";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { type ThirdwebContract } from "thirdweb";
 import { claimTo } from "thirdweb/extensions/erc1155";
 import {
    useActiveAccount,
    useActiveWalletChain,
-   useReadContract,
    useSendTransaction,
    useSwitchActiveWalletChain,
    useWaitForReceipt,
@@ -17,6 +15,7 @@ import {
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DEFAULT_QUALITY } from "./config";
+import { useToast } from "@/hooks/use-toast";
 
 type Props = {
    contract: ThirdwebContract;
@@ -36,6 +35,7 @@ export const useNftMint = (props: Props) => {
       },
    });
    const [useCustomAddress, setUseCustomAddress] = useState(false);
+   const { toast } = useToast();
 
    const account = useActiveAccount();
    const activeChain = useActiveWalletChain();
@@ -49,20 +49,6 @@ export const useNftMint = (props: Props) => {
    const { isLoading, isSuccess } = useWaitForReceipt(
       data ? { ...data, maxBlocksWaitTime: 3 } : undefined
    );
-
-   useEffect(() => {
-      const chainOfWallet = activeChain?.id;
-      const chainOfContract = contract.chain.id;
-      const hasAccount = account && account?.address;
-
-      if (hasAccount && chainOfContract && chainOfContract !== chainOfWallet) {
-         try {
-            switchChain({ id: contract.chain.id, rpc: contract.chain.rpc });
-         } catch (error) {
-            console.error("Error switching chain!");
-         }
-      }
-   }, [switchChain, account, contract.chain.id]);
 
    const isDisabledMintBtn = isPendingSendTransaction || isLoading;
 
@@ -80,19 +66,42 @@ export const useNftMint = (props: Props) => {
       });
       sendTransaction(transaction, {
          onError: (err: Error) => {
-            toast.error(err.message);
+            toast({
+               title: "Error minting NFT!",
+               description: err.message,
+               variant: "destructive",
+            });
          },
          onSuccess: () => {
-            toast.success("Minted successfully, waiting for confirmation!");
+            toast({
+               title: "Minted NFT successfully!",
+               description: "Waiting for the confirmation.",
+            });
          },
       });
    };
+
+   useEffect(() => {
+      const chainOfWallet = activeChain?.id;
+      const chainOfContract = contract.chain.id;
+      const hasAccount = account && account?.address;
+
+      if (hasAccount && chainOfContract && chainOfContract !== chainOfWallet) {
+         try {
+            switchChain({ id: contract.chain.id, rpc: contract.chain.rpc });
+         } catch (error) {
+            console.error("Error switching chain!");
+         }
+      }
+   }, [switchChain, account, contract.chain.id]);
 
    return {
       useCustomAddress,
       isPendingSendTransaction,
       isDisabledMintBtn,
       form,
+      isSuccess,
+      toast,
       setUseCustomAddress,
       onSubmit,
    };

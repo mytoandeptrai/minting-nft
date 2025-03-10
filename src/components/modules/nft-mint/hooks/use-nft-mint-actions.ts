@@ -29,6 +29,8 @@ export const useMintNftActions = (props: Props) => {
       },
    });
 
+   const hasMinted = Number(balanceData) > 0;
+
    const disabled = useMemo(() => {
       if (!balanceData) {
          return isDisabled;
@@ -36,12 +38,13 @@ export const useMintNftActions = (props: Props) => {
 
       if (useCustomAddress && !customAddress) return true;
 
-      return isDisabled || Number(balanceData) > 0;
-   }, [isDisabled, balanceData, useCustomAddress, customAddress]);
+      return isDisabled || hasMinted;
+   }, [isDisabled, hasMinted, useCustomAddress, customAddress]);
 
    return {
       ...props,
       account,
       disabled,
+      hasMinted
    };
 };
