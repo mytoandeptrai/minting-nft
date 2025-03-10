@@ -52,18 +52,21 @@ const NftMintContentHeader = (props: Props) => {
             </NFT>
          </div>
          <div className="-mt-12">
-            <h2 className="text-2xl font-bold mb-2 dark:text-custom-title">
+            <h2 className="text-2xl font-bold mb-2 dark:bg-gradient-to-b dark:from-[#FFB931] dark:to-[#FF7A00] inline-block dark:text-transparent dark:bg-clip-text">
                {props.displayName}
             </h2>
-            <p className="text-lg font-semibold mb-4">
-               Collections:{" "}
+            <p className="text-lg font-semibold mb-1">
+               Collection:{" "}
                <Link
                   className="underline font-normal"
                   href="https://joepegs.com/collections/avalanche/lil-coq"
                   target="_blank"
                >
-                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_NAME}
+                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_NAME!}
                </Link>
+            </p>
+            <p className="text-lg font-semibold mb-1">
+               Created: <span className="font-normal">100</span>
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
                {props.description}

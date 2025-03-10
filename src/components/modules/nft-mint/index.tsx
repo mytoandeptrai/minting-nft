@@ -33,7 +33,6 @@ export default function NftMint(props: NftMintProps) {
          form.reset();
          toast({
             title: "Confirmed successfully!",
-            description: "Click the button beside to view NFT.",
             action: (
                <ToastAction
                   altText="Try again"
@@ -45,7 +44,7 @@ export default function NftMint(props: NftMintProps) {
                      }
                   }}
                >
-                  View
+                  View NFT
                </ToastAction>
             ),
          });
@@ -58,7 +57,7 @@ export default function NftMint(props: NftMintProps) {
             className="block"
             onSubmit={form.handleSubmit(onSubmit)}
          >
-            <Card className="w-full max-w-md">
+            <Card className="w-full max-w-md shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset]">
                <NftMintContent
                   {...props}
                   isPendingSendTransaction={isPendingSendTransaction}

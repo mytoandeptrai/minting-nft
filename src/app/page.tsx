@@ -1,20 +1,19 @@
 "use client";
 
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import LoadingNftMint from "@/components/loading-nft-mint";
 import NftMint from "@/components/modules/nft-mint";
-import { wallets } from "@/components/modules/nft-mint/hooks";
 import {
    defaultChainId,
    defaultNftContractAddress,
    defaultTokenId,
 } from "@/lib/constants";
 import { client } from "@/lib/thirdwebClient";
-import Image from "next/image";
-import Link from "next/link";
 import { defineChain, getContract } from "thirdweb";
 import { getContractMetadata } from "thirdweb/extensions/common";
 import { getNFT, isERC1155 } from "thirdweb/extensions/erc1155";
-import { ConnectButton, useReadContract } from "thirdweb/react";
+import { useReadContract } from "thirdweb/react";
 
 export default function Home() {
    const tokenId = defaultTokenId;
@@ -51,42 +50,8 @@ export default function Home() {
 
    return (
       <div className="flex flex-col min-h-screen transition-colors duration-200">
-         <header className="bg-gray-900 text-white shadow-md sticky top-0 z-50">
-            <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-               <div className="flex items-center gap-x-3">
-                  <Link
-                     href="/"
-                     className="flex items-center"
-                  >
-                     <Image
-                        src="/logo.png"
-                        alt="logo"
-                        width={50}
-                        height={50}
-                     />
-                  </Link>
-                  <div>
-                     <Image
-                        src="/sub-logo.png"
-                        alt="sub-logo"
-                        width={250}
-                        height={38}
-                     />
-                  </div>
-               </div>
-               <div>
-                  <ConnectButton
-                     wallets={wallets}
-                     client={client}
-                     connectModal={{
-                        showThirdwebBranding: false,
-                        title: "Connect to your wallet",
-                     }}
-                  />
-               </div>
-            </div>
-         </header>
-         <div className="h-full flex-1 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-950">
+         <Header />
+         <div className="h-full flex-1 w-full flex items-center justify-center bg-gray-100 dark:bg-dark-grey">
             <NftMint
                contract={contract}
                displayName={displayName || ""}
@@ -96,6 +61,7 @@ export default function Home() {
                tokenId={tokenId}
             />
          </div>
+         <Footer />
       </div>
    );
 }

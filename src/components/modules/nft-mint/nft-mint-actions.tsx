@@ -24,7 +24,7 @@ const NftMintActions = (props: Props) => {
                   disabled={disabled}
                   loading={props?.isDisabled}
                >
-                  {hasMinted ? "You minted" : "Mint"} NFT
+                  {hasMinted ? "Wallet Limit Reached" : "Mint NFT"} 
                </Button>
             </div>
          ) : (

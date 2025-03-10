@@ -5,8 +5,8 @@ import { Plus, Minus } from "lucide-react";
 
 export default function LoadingNftMint() {
    return (
-      <div className="w-full min-h-screen bg-gray-900">
-         <div className="container mx-auto px-4 py-4 flex items-center justify-between bg-gray-900 mb-1">
+      <div className="w-full min-h-screen bg-dark-grey">
+         <div className="container mx-auto px-4 py-4 flex items-center justify-between bg-dark-grey mb-1">
             <Skeleton className="h-12 w-80" />
             <Skeleton className="h-12 w-40" />
          </div>
