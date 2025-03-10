@@ -33,6 +33,7 @@ const NftMintActions = (props: Props) => {
                wallets={wallets}
                connectModal={{
                   showThirdwebBranding: false,
+                  title: 'Connect to your wallet'
                }}
             />
          )}

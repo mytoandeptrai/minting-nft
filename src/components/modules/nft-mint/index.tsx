@@ -30,6 +30,7 @@ export default function NftMint(props: NftMintProps) {
                client={client}
                connectModal={{
                   showThirdwebBranding: false,
+                  title: 'Connect to your wallet'
                }}
             />
          </div>
