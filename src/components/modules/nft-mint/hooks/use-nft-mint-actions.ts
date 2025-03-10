@@ -12,31 +12,39 @@ type Props = {
 };
 export const useMintNftActions = (props: Props) => {
    const { contract, tokenId, isDisabled = false } = props;
-   const { control } = useFormContext<z.infer<typeof nftMintSchema>>();
+   const {
+      control,
+      formState: { errors },
+   } = useFormContext<z.infer<typeof nftMintSchema>>();
    const [useCustomAddress, customAddress] = useWatch({
       control,
       name: ["useCustomAddress", "customAddress"],
    });
 
    const account = useActiveAccount();
+   const owner = useCustomAddress ? customAddress! : account?.address!;
+   const enabled = useCustomAddress
+      ? !!customAddress && !errors?.customAddress
+      : !!account?.address;
+
    const { data: balanceData } = useReadContract({
       contract,
       method:
          "function balanceOf(address owner, uint256 id) view returns (uint256)",
-      params: [account?.address!, BigInt(tokenId)],
+      params: [owner, BigInt(tokenId)],
       queryOptions: {
-         enabled: !!account?.address,
+         enabled,
       },
    });
 
    const hasMinted = Number(balanceData) > 0;
 
    const disabled = useMemo(() => {
+      if (useCustomAddress && !customAddress) return true;
+
       if (!balanceData) {
          return isDisabled;
       }
-
-      if (useCustomAddress && !customAddress) return true;
 
       return isDisabled || hasMinted;
    }, [isDisabled, hasMinted, useCustomAddress, customAddress]);
@@ -45,6 +53,6 @@ export const useMintNftActions = (props: Props) => {
       ...props,
       account,
       disabled,
-      hasMinted
+      hasMinted,
    };
 };
