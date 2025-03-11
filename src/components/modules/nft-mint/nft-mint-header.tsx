@@ -34,7 +34,7 @@ const NftMintHeader = (props: Props) => {
       name: "useCustomAddress",
    });
 
-   const { data: balanceData, isLoading } = useReadContract({
+   const { data: balanceData } = useReadContract({
       contract: props.contract,
       method: "function totalSupply(uint256) view returns (uint256)",
       params: [BigInt(props.tokenId)],
