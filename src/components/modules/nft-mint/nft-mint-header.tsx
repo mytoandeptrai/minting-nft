@@ -65,10 +65,10 @@ const NftMintHeader = (props: Props) => {
                Marktetplace:{" "}
                <Link
                   className="underline font-normal"
-                  href={process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLCE_URL || "https://salvor.io"}
+                  href={process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLACE_URL || "https://salvor.io"}
                   target="_blank"
                >
-                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_NAME || "Salvor"}
+                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLACE_NAME || "Salvor"}
                </Link>
             </p>
             <p className="text-lg font-semibold mb-1">
