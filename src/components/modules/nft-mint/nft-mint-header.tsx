@@ -51,7 +51,7 @@ const NftMintHeader = (props: Props) => {
                tokenId={props.tokenId}
             >
                <React.Suspense
-                  fallback={<Skeleton className="w-full h-full object-cover" />}
+                  fallback={<Skeleton className="w-full h-full object-cover -mt-14" />}
                >
                   <NFT.Media className="w-full h-full object-cover -mt-14" />
                </React.Suspense>
