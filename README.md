@@ -1,40 +1,85 @@
+# NFT Mint Token - Avalanche Chain 👋
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Yash094/nft-minting-template&env=NEXT_PUBLIC_THIRDWEB_CLIENT_ID,THIRDWEB_SECRET_KEY,NEXT_PUBLIC_NFT_CONTRACT_ADDRESS,NEXT_PUBLIC_NFT_CONTRACT_CHAIN_ID,NEXT_PUBLIC_NFT_CONTRACT_TOKEN_ID&envDescription=Get%20NEXT_PUBLIC_THIRDWEB_CLIENT_ID%20%26%20THIRDWEB_SECRET_KEY%20from%20https%3A%2F%2Fthirdweb.com%2Fteam%2F~%2F~%2F&project-name=my-nft-minting-website&repository-name=my-nft-minting-website&demo-title=NFT%20Minting%20Template&demo-url=https%3A%2F%2Fmint.thirdweb-preview.com%2F)
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000)
 
+> NFT Mint Token Web - Avalanche Chain Integration
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Table of Contents
 
-## Getting Started
+1. [Introduction](#introduction)
+2. [Technologies](#technologies)
+3. [Requirements](#requirements)
+4. [Installation](#installation)
+5. [Environment](#Environment)
+6. [Running the Project](#running-the-project)
+7. [License](#license)
 
-First, run the development server:
+## Introduction
 
+This project is a **NFT Mint Token** web application built on the **Avalanche Chain** using **Next.js 14**, **ShadCN**, and **Thirdweb**. The app enables users to connect their wallets and mint NFTs directly on the Avalanche Blockchain.
+
+## Technologies
+
+- Next.js 14
+- Shadcn
+- Thirdweb
+- Avalanche Blockchain
+- Node.js >= 20
+
+## Requirements
+
+- **Node.js**: `>= 20`
+- **Yarn**: Ensure you have Yarn installed globally.
+
+## Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/mytoandeptrai/minting-nft
+   cd your-repo-name
+   ```
+
+2. **Install dependencies**:
+   Make sure you have Yarn installed. If not, you can install it globally using npm:
+   ```bash
+   npm install --global yarn
+   ```
+
+   Then install the project dependencies:
+   ```bash
+   yarn install
+   ```
+
+## Environment
+
+For Local Development, run:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To create a production build of the project, run:
+```bash
+yarn build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This will generate the static files needed to deploy the application.
 
-## Learn More
+## Running the Project
 
-To learn more about Next.js, take a look at the following resources:
+To start the development server, run:
+```bash
+yarn dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To start the production server then run:
+```bash
+yarn build && yarn start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project is licensed under the [MIT License](LICENSE).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
