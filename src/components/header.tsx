@@ -21,15 +21,15 @@ const Header = () => {
                      width={50}
                      height={50}
                   />
+                  <div>
+                     <Image
+                        src="/sub-logo.svg"
+                        alt="sub-logo"
+                        width={250}
+                        height={38}
+                     />
+                  </div>
                </Link>
-               <div>
-                  <Image
-                     src="/sub-logo.svg"
-                     alt="sub-logo"
-                     width={250}
-                     height={38}
-                  />
-               </div>
             </div>
             <div>
                <ConnectButton
