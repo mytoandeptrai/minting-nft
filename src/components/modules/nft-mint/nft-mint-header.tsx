@@ -61,16 +61,16 @@ const NftMintHeader = (props: Props) => {
             <h2 className="text-2xl font-bold mb-2 dark:bg-gradient-to-b dark:from-[#FFB931] dark:to-[#FF7A00] inline-block dark:text-transparent dark:bg-clip-text">
                {props.displayName}
             </h2>
-            {/* <p className="text-lg font-semibold mb-1">
-               Collection:{" "}
+            <p className="text-lg font-semibold mb-1">
+               Marktetplace:{" "}
                <Link
                   className="underline font-normal"
-                  href="https://joepegs.com/collections/avalanche/lil-coq"
+                  href={process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLCE_URL || "https://salvor.io"}
                   target="_blank"
                >
-                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_NAME!}
+                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_NAME || "Salvor"}
                </Link>
-            </p> */}
+            </p>
             <p className="text-lg font-semibold mb-1">
                Collection:{" "}
                <span className="font-normal">
