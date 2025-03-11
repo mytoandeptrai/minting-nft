@@ -51,7 +51,7 @@ export default function Home() {
    return (
       <div className="flex flex-col min-h-screen transition-colors duration-200">
          <Header />
-         <div className="h-full flex-1 w-full flex items-center justify-center bg-gray-100 dark:bg-dark-grey pt-6">
+         <div className="h-full flex-1 w-full flex items-center justify-center bg-gray-100 dark:bg-dark-grey pt-1 md:pt-6">
             <NftMint
                contract={contract}
                displayName={displayName || ""}

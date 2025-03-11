@@ -12,7 +12,7 @@ type Props = {
 };
 
 const NftMintActions = (props: Props) => {
-   const { account, disabled, hasMinted } = useMintNftActions(props);
+   const { account, disabled, hasMinted, isMobile } = useMintNftActions(props);
 
    return (
       <CardFooter>
@@ -24,13 +24,15 @@ const NftMintActions = (props: Props) => {
                   disabled={disabled}
                   loading={props?.isDisabled}
                >
-                  {hasMinted ? "Wallet Limit Reached" : "Mint NFT"} 
+                  {hasMinted ? "Wallet Limit Reached" : "Mint NFT"}
                </Button>
             </div>
          ) : (
             <ConnectButton
                client={client}
-               connectButton={{ style: { width: "100%" } }}
+               connectButton={{
+                  style: { width: "100%", height: isMobile ? "40px" : "auto" },
+               }}
                wallets={wallets}
                connectModal={{
                   showThirdwebBranding: false,

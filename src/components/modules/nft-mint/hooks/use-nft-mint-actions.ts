@@ -1,3 +1,4 @@
+import useCheckMobile from "@/hooks/use-mobile";
 import { nftMintSchema } from "@/schemas";
 import { useMemo } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -21,6 +22,7 @@ export const useMintNftActions = (props: Props) => {
       name: ["useCustomAddress", "customAddress"],
    });
 
+   const isMobile = useCheckMobile();
    const account = useActiveAccount();
    const owner = useCustomAddress ? customAddress! : account?.address!;
    const enabled = useCustomAddress
@@ -54,5 +56,6 @@ export const useMintNftActions = (props: Props) => {
       account,
       disabled,
       hasMinted,
+      isMobile
    };
 };

@@ -7,8 +7,8 @@ export default function LoadingNftMint() {
    return (
       <div className="w-full min-h-screen bg-dark-grey">
          <div className="container mx-auto px-4 py-4 flex items-center justify-between bg-dark-grey mb-1">
-            <Skeleton className="h-12 w-80" />
-            <Skeleton className="h-12 w-40" />
+            <Skeleton className="h-10 md:h-12 w-80" />
+            <Skeleton className="h-10 md:h-12 w-40" />
          </div>
          <div className="w-full flex flex-col items-center justify-center flex-1 mt-28 pb-10">
             <Card className="w-full max-w-md">
@@ -44,7 +44,7 @@ export default function LoadingNftMint() {
                </CardContent>
 
                <CardFooter>
-                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 md:h-12 w-full" />
                </CardFooter>
             </Card>
          </div>
