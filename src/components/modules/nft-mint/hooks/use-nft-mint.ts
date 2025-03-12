@@ -1,7 +1,7 @@
 "use client";
 
 import { nftMintSchema } from "@/schemas";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type ThirdwebContract } from "thirdweb";
 import { claimTo } from "thirdweb/extensions/erc1155";
@@ -49,6 +49,17 @@ export const useNftMint = (props: Props) => {
    const { isLoading, isSuccess } = useWaitForReceipt(
       data ? { ...data, maxBlocksWaitTime: 3 } : undefined
    );
+
+   const linkRedirect = useMemo(() => {
+      if (props.contract.address && props.tokenId !== undefined) {
+         const marketplace = process.env.NEXT_PUBLIC_NFT_MARKETPLACE;
+         const environment = process.env.NEXT_PUBLIC_NFT_ENVIRONMENT;
+         const chain = environment === 'mainnet' ? "avalanche" : "avalanche_fuji";
+         return `${marketplace}/assets/${chain}/${props.contract.address}/${Number(props.tokenId)}`;
+      }
+
+      return null;
+   }, [props.contract.address, props.tokenId]);
 
    const isDisabledMintBtn = isPendingSendTransaction || isLoading;
 
@@ -101,6 +112,7 @@ export const useNftMint = (props: Props) => {
       isDisabledMintBtn,
       form,
       isSuccess,
+      linkRedirect,
       toast,
       setUseCustomAddress,
       onSubmit,

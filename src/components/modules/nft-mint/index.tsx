@@ -24,6 +24,7 @@ export default function NftMint(props: NftMintProps) {
       isDisabledMintBtn,
       form,
       isSuccess,
+      linkRedirect,
       onSubmit,
       toast,
    } = useNftMint(props);
@@ -37,19 +38,18 @@ export default function NftMint(props: NftMintProps) {
                <ToastAction
                   altText="Try again"
                   onClick={() => {
-                     const market =
-                        process.env.NEXT_PUBLIC_NFT_MARKETPLACE_DETAIL;
-                     if (market) {
-                        window.open(market, "_blank");
+                     if (linkRedirect) {
+                        window.open(linkRedirect, "_blank");
                      }
                   }}
+                  className="hover:text-white"
                >
                   View NFT
                </ToastAction>
             ),
          });
       }
-   }, [isSuccess, form]);
+   }, [isSuccess, form, linkRedirect]);
 
    return (
       <Form {...form}>

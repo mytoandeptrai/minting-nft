@@ -7,7 +7,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Switch } from "@/components/ui/switch";
-import { cn, formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency, replaceNonAlphanumeric } from "@/lib/utils";
 import { nftMintSchema } from "@/schemas";
 import Link from "next/link";
 import React from "react";
@@ -43,6 +43,17 @@ const NftMintHeader = (props: Props) => {
       },
    });
 
+   const { data: nameData } = useReadContract({
+      contract: props.contract,
+      method: "function name() view returns (string)",
+      params: [],
+      queryOptions: {
+         enabled: !!props.contract.address,
+      },
+   });
+
+   const href = `${process.env.NEXT_PUBLIC_NFT_MARKETPLACE}/collection/${replaceNonAlphanumeric(nameData ?? "")}`;
+
    return (
       <>
          <div className="aspect-square overflow-hidden rounded-lg">
@@ -51,9 +62,11 @@ const NftMintHeader = (props: Props) => {
                tokenId={props.tokenId}
             >
                <React.Suspense
-               fallback={<Skeleton className="w-full h-full object-cover rounded-lg -mt-14" />}
+                  fallback={
+                     <Skeleton className="w-full h-full object-cover rounded-lg -mt-14" />
+                  }
                >
-               <NFT.Media className="w-full h-full object-cover rounded-lg -mt-14" />
+                  <NFT.Media className="w-full h-full object-cover rounded-lg -mt-14" />
                </React.Suspense>
             </NFT>
          </div>
@@ -65,10 +78,10 @@ const NftMintHeader = (props: Props) => {
                Marketplace:{" "}
                <Link
                   className="underline font-normal"
-                  href={process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLACE_URL || "https://salvor.io"}
+                  href={href}
                   target="_blank"
                >
-                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLACE_NAME || "Salvor"}
+                  {nameData ?? ""}
                </Link>
             </p>
             <p className="text-lg font-semibold mb-1">

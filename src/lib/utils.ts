@@ -8,3 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export function formatCurrency(amount: number): string {
    return amount.toLocaleString("en-US", { maximumFractionDigits: 0 });
 }
+
+export function replaceNonAlphanumeric(inputString: string): string {
+   return inputString.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
