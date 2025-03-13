@@ -10,7 +10,7 @@ import { Switch } from "@/components/ui/switch";
 import { cn, formatCurrency, replaceNonAlphanumeric } from "@/lib/utils";
 import { nftMintSchema } from "@/schemas";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { ThirdwebContract } from "thirdweb";
 import { NFT, useReadContract } from "thirdweb/react";
@@ -26,8 +26,14 @@ type Props = {
    isPendingSendTransaction: boolean;
 };
 
+const initialContractInfo = {
+   name: "",
+   linkRedirect: "",
+};
+
 const NftMintHeader = (props: Props) => {
    const { control } = useFormContext<z.infer<typeof nftMintSchema>>();
+   const [contractInfo, setContractInfo] = useState(initialContractInfo);
 
    const useCustomAddress = useWatch({
       control,
@@ -43,18 +49,44 @@ const NftMintHeader = (props: Props) => {
       },
    });
 
-   const { data: nameData } = useReadContract({
-      contract: props.contract,
-      method: "function name() view returns (string)",
-      params: [],
-      queryOptions: {
-         enabled: !!props.contract.address,
-      },
-   });
+   const onRequestHandler = useCallback(async (contract: string) => {
+      try {
+         const environment = process.env.NEXT_PUBLIC_NFT_ENVIRONMENT;
+         const chain =
+            environment === "mainnet" ? "avalanche" : "avalanche_fuji";
+         const url = `${process.env.NEXT_PUBLIC_OPEN_SEA_API}/chain/${chain}/contract/${contract}`;
+         const openSeaAPIKey = process.env.NEXT_PUBLIC_OPEN_SEA_API_KEY;
 
-   const truncatedName = replaceNonAlphanumeric(nameData ?? "");
+         const headers: Record<string, string> = openSeaAPIKey
+            ? { "x-api-key": openSeaAPIKey }
+            : {};
 
-   const href = `${process.env.NEXT_PUBLIC_NFT_MARKETPLACE}/collection/${truncatedName}${nameData && "-1"}`;
+         const response = await fetch(url, {
+            headers: headers,
+            method: "GET",
+         });
+         return await response.json();
+      } catch (error) {
+         return null;
+      }
+   }, []);
+
+   useEffect(() => {
+      (async () => {
+         const contract = process.env.NEXT_PUBLIC_NFT_CONTRACT_ADDRESS!;
+         if (!contract) return;
+         const response = await onRequestHandler(contract);
+         if (response) {
+            setContractInfo({
+               name: response?.name || "",
+               linkRedirect: `${process.env
+                  .NEXT_PUBLIC_NFT_MARKETPLACE!}/collection/${
+                  response?.collection
+               }`,
+            });
+         }
+      })();
+   }, []);
 
    return (
       <>
@@ -80,10 +112,10 @@ const NftMintHeader = (props: Props) => {
                Marketplace:{" "}
                <Link
                   className="underline font-normal"
-                  href={href}
+                  href={contractInfo?.linkRedirect || "/"}
                   target="_blank"
                >
-                  {nameData ?? ""}
+                  {contractInfo?.name ?? ""}
                </Link>
             </p>
             <p className="text-lg font-semibold mb-1">
