@@ -52,7 +52,9 @@ const NftMintHeader = (props: Props) => {
       },
    });
 
-   const href = `${process.env.NEXT_PUBLIC_NFT_MARKETPLACE}/collection/${replaceNonAlphanumeric(nameData ?? "")}`;
+   const truncatedName = replaceNonAlphanumeric(nameData ?? "");
+
+   const href = `${process.env.NEXT_PUBLIC_NFT_MARKETPLACE}/collection/${truncatedName}${nameData && "-1"}`;
 
    return (
       <>
