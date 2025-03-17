@@ -58,7 +58,7 @@ const NftMintHeader = (props: Props) => {
          const openSeaAPIKey = process.env.NEXT_PUBLIC_OPEN_SEA_API_KEY;
 
          const headers: Record<string, string> = openSeaAPIKey
-            ? { "x-api-key": openSeaAPIKey }
+            ? { accept: "application/json", "x-api-key": openSeaAPIKey }
             : {};
 
          const response = await fetch(url, {
