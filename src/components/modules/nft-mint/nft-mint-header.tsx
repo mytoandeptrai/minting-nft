@@ -115,7 +115,7 @@ const NftMintHeader = (props: Props) => {
                   href={contractInfo?.linkRedirect || "/"}
                   target="_blank"
                >
-                  {contractInfo?.name ?? ""}
+                  {process.env.NEXT_PUBLIC_NFT_COLLECTION_MARKETPLACE_NAME ?? "OpenSea"}
                </Link>
             </p>
             <p className="text-lg font-semibold mb-1">
