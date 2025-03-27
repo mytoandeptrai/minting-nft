@@ -5,6 +5,7 @@ import { ThirdwebProvider } from "thirdweb/react";
 import { ToastProvider } from "@/components/ui/toast";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default function RootLayout({
                </ThirdwebProvider>
             </ToastProvider>
          </body>
+         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID! ?? "G-JWXHX6PBPE"} />
       </html>
    );
 }
