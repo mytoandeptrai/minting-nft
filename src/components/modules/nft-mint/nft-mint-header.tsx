@@ -57,6 +57,9 @@ const NftMintHeader = (props: Props) => {
                </React.Suspense>
             </NFT>
          </div>
+         <div className="flex flex-col items-center w-full">
+            <p className="text-center font-semibold text-lg text-red-500">FORGE ESSENCE Mint is now closed</p>
+         </div>
          <div className="-mt-12">
             <h2 className="text-2xl font-bold mb-2 dark:bg-gradient-to-b dark:from-[#FFB931] dark:to-[#FF7A00] inline-block dark:text-transparent dark:bg-clip-text">
                {props.displayName}
