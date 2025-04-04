@@ -16,7 +16,7 @@ const NftMintActions = (props: Props) => {
 
    return (
       <CardFooter>
-         {account ? (
+         {/* {account ? (
             <div className="flex flex-col gap-y-2 w-full">
                <Button
                   type="submit"
@@ -37,7 +37,10 @@ const NftMintActions = (props: Props) => {
                   title: "Connect to your wallet",
                }}
             />
-         )}
+         )} */}
+         <div className="flex flex-col items-center w-full">
+            <p className="text-center font-semibold text-lg">FORGE ESSENCE Mint is now closed</p>
+         </div>
       </CardFooter>
    );
 };

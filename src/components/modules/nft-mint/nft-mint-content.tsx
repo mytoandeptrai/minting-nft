@@ -34,7 +34,7 @@ const NftMintContent = (props: Props) => {
    return (
       <CardContent className="pt-6">
          <NftMintHeader {...props} />
-         {useCustomAddress && (
+         {/* {useCustomAddress && (
             <div className="mb-4">
                <FormField
                   control={control}
@@ -56,7 +56,7 @@ const NftMintContent = (props: Props) => {
                   )}
                />
             </div>
-         )}
+         )} */}
       </CardContent>
    );
 };

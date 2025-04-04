@@ -80,7 +80,7 @@ const NftMintHeader = (props: Props) => {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
                {props.description}
             </p>
-            <div className="flex items-center space-x-2 mb-4">
+            {/* <div className="flex items-center space-x-2 mb-4">
                <FormField
                   control={control}
                   name="useCustomAddress"
@@ -106,7 +106,7 @@ const NftMintHeader = (props: Props) => {
                >
                   Mint to a custom address
                </Label>
-            </div>
+            </div> */}
          </div>
       </>
    );
