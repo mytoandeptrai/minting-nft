@@ -105,6 +105,9 @@ const NftMintHeader = (props: Props) => {
             </NFT>
          </div>
          <div className="-mt-12">
+            <div className="flex flex-col items-center w-full">
+               <p className="text-center font-semibold text-lg text-red-500 my-4">FORGE ESSENCE Mint is now closed</p>
+            </div>
             <h2 className="text-2xl font-bold mb-2 dark:bg-gradient-to-b dark:from-[#FFB931] dark:to-[#FF7A00] inline-block dark:text-transparent dark:bg-clip-text">
                {props.displayName}
             </h2>
@@ -127,7 +130,7 @@ const NftMintHeader = (props: Props) => {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
                {props.description}
             </p>
-            <div className="flex items-center space-x-2 mb-4">
+            {/* <div className="flex items-center space-x-2 mb-4">
                <FormField
                   control={control}
                   name="useCustomAddress"
@@ -153,7 +156,7 @@ const NftMintHeader = (props: Props) => {
                >
                   Mint to a custom address
                </Label>
-            </div>
+            </div> */}
          </div>
       </>
    );
